@@ -19,4 +19,6 @@ map.setView([52, 4], 10);
 var marker = L.marker([52, 4]).addTo(map);
 ```
 
-Another example in `examples/leaflet-image/index.js`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
+`examples/leaflet-image/`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
+
+`examples/leaflet-markercluster`, using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) to output clusters to stdout.
