@@ -8,28 +8,22 @@ var fs = require('fs');
 var L = require('../../index.js');
 var leafletImage = require('leaflet-image');
 
-
 // create an element for the map.
 var element = document.createElement('div');
 element.id = 'map';
 document.body.appendChild(element);
 
 // the map.
-var map = L.map('map').setView([0, 0], 4);
+var map = L.map('map').setView([0, 0], 2);
 
 // load some geojson
 var gj = JSON.parse(fs.readFileSync(__dirname + '/countries.geojson'));
 
 L.geoJson(gj).addTo(map);
 
-// TODO: fix tileLayer.
-// It currently makes leaflet-image fail silently.
-
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-
-// console.log(map._container.outerHTML);
 
 console.log('Save to image using leaflet-image...');
 leafletImage(map, function (err, canvas) {
