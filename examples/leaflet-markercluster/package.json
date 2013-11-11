@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "leaflet.markercluster": "~1.0.0"
+  }
+}
