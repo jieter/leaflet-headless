@@ -10,6 +10,8 @@ This does not include the actual leaflet code but has it as a dependency.
 ## Example
 
 ```JavaScript
+var L = require('leaflet-headless');
+
 var map = L.map(document.createElement('div'));
 
 map.setView([52, 4], 10);
@@ -17,4 +19,4 @@ map.setView([52, 4], 10);
 var marker = L.marker([52, 4]).addTo(map);
 ```
 
-## Using leaflet-image?
+Another example in `examples/leaflet-image/index.js`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
