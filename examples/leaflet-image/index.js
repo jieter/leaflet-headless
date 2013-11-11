@@ -31,11 +31,11 @@ L.geoJson(gj).addTo(map);
 
 
 console.log('Save to image using leaflet-image...');
-leafletImage(map, function(err, canvas) {
+leafletImage(map, function (err, canvas) {
 	var out = fs.createWriteStream(__dirname + '/test.png');
 	var stream = canvas.pngStream();
 
-	stream.on('data', function(chunk){
+	stream.on('data', function (chunk) {
 		out.write(chunk);
 	});
 

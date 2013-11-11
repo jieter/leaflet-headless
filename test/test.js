@@ -3,7 +3,6 @@
 var L = require('../index.js');
 var chai = require('chai').should();
 
-
 describe('Leaflet-headless', function () {
 
 	describe('basic functions', function () {
@@ -37,12 +36,12 @@ describe('Leaflet-headless', function () {
 			map.setView([52, 4], 10);
 
 			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
 			}).addTo(map);
-		})
+		});
 
 		it('has some working imagePath');
 
 	});
-
 });

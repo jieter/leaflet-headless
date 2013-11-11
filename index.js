@@ -6,7 +6,7 @@
 
 'use strict';
 
-var jsdom = require('jsdom').jsdom
+var jsdom = require('jsdom').jsdom;
 
 // make some globals to fake browser behaviour.
 GLOBAL.document = jsdom('<html><head></head><body></body></html>');
