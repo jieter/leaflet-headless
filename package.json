@@ -1,0 +1,22 @@
+{
+  "name": "leaflet-headless",
+  "version": "0.0.0",
+  "description": "Leaflet for node.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": "",
+  "author": "Jan Pieter Waagmeester <jieter@jieter.nl>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "leaflet": "~0.6.4",
+    "jsdom": "~0.8.8",
+    "canvas": "~1.1.2"
+  },
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "mocha": "~1.14.0"
+  }
+}
