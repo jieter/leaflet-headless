@@ -20,7 +20,7 @@ GLOBAL.navigator = GLOBAL.window.navigator;
 // shim Image
 var canvasImage = require('canvas').Image;
 var imageShim = function imageShim() {};
-imageShim.prototype__defineSetter__('src', function (url) {
+imageShim.prototype.__defineSetter__('src', function (url) {
 	var self = this;
 	request.get(url, function (err, res, buffer) {
 		var image = new canvasImage();
