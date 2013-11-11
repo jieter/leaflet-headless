@@ -1,6 +1,13 @@
 /**
- * Needs a sample-data.geojson in
+ * Clustering example from
+ * https://github.com/rclark/server-side-leaflet/blob/master/clustering.js
+ *
+ * Needs a sample-data.geojson (27M)
+ * https://github.com/rclark/server-side-leaflet/blob/master/sample-data.geojson)
  */
+
+'use strict';
+
 var fs = require('fs');
 var L = require('../../index.js');
 
@@ -32,7 +39,7 @@ function cluster(zoom, callback) {
         });
 
         callback({
-            type: "FeatureCollection",
+            type: 'FeatureCollection',
             features: features
         });
     });

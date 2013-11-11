@@ -12,12 +12,11 @@
 		"it": true,
 		"describe": true,
 		"beforeEach": true,
-		"afterEech": true
+		"afterEach": true
 	},
 
 	// code style
 	"bitwise": true,
-	"camelcase": true,
 	"curly": true,
 	"eqeqeq": true,
 	"forin": false,

@@ -6,6 +6,9 @@
 
 'use strict';
 
+var request = require('request').defaults({
+	encoding: null
+});
 var jsdom = require('jsdom').jsdom;
 
 // make some globals to fake browser behaviour.
@@ -14,8 +17,24 @@ GLOBAL.window = document.parentWindow;
 GLOBAL.window.navigator.userAgent = 'webkit';
 GLOBAL.navigator = GLOBAL.window.navigator;
 
-// add Image implementation from canvas
-GLOBAL.Image = require('canvas').Image;
+// shim Image
+var canvasImage = require('canvas').Image;
+var imageShim = function imageShim() {};
+imageShim.prototype__defineSetter__('src', function (url) {
+	var self = this;
+	request.get(url, function (err, res, buffer) {
+		var image = new canvasImage();
+		image.src = buffer;
+
+		if (self.onload) {
+			self.onload.apply(image);
+		}
+	});
+});
+
+GLOBAL.Image = imageShim;
+
+GLOBAL.L_DISABLE_3D = true;
 
 var L = require('leaflet');
 
