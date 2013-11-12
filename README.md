@@ -8,9 +8,9 @@ Leaflet-headless
  - Tiles, Markers and Path layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
  - Currently fixed to 1024x1024 map size.
 
-## Example
+### Example
 
-Run `npm install leaflet-headless` to install the package. Requiring `leaflet-headless` a global `L` which just works like in the browser.
+Run `npm install leaflet-headless` to install the package. Requiring `leaflet-headless` will introduce a global `L` which just works like in the browser.
 
 ```JavaScript
 var L = require('leaflet-headless');
@@ -21,11 +21,10 @@ map.setView([52, 4], 10);
 
 var marker = L.marker([52, 4]).addTo(map);
 ```
+
 Other examples:
  - `examples/leaflet-image/`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
-
  - `examples/leaflet-markercluster`, using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) to output clusters to stdout.
-
  - `examples/choropleth/`, [Choropleth tutorial from leafletjs.com](http://leafletjs.com/examples/choropleth.html) using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
 
 For these to work, you'll need to run `npm install` in both the root of the repository and in the example directory.
@@ -41,6 +40,5 @@ Save to image using leaflet-image...
 Saved test.png
 ```
 
-## Attribution
-This is a more complete version of of https://github.com/rclark/server-side-leaflet.
-It does not include the actual leaflet code but has it as a dependency.
+### Attribution
+This is inspired by https://github.com/rclark/server-side-leaflet.
