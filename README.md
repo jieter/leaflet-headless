@@ -5,7 +5,6 @@ Leaflet-headless
 
  - Has Leaflet as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
- -
  - Tiles, Markers and Path layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
  - Currently fixed to 1024x1024 map size.
 
