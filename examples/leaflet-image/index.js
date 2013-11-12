@@ -14,12 +14,17 @@ element.id = 'map';
 document.body.appendChild(element);
 
 // the map.
-var map = L.map('map').setView([0, 0], 2);
+var map = L.map('map').setView([0, 0], 3);
 
 // load some geojson
 var gj = JSON.parse(fs.readFileSync(__dirname + '/countries.geojson'));
+L.geoJson(gj, {
+	style: {
+		weight: 2
+	}
+}).addTo(map);
 
-L.geoJson(gj).addTo(map);
+L.marker([0, 0]).addTo(map);
 
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

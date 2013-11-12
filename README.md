@@ -6,7 +6,6 @@ This does not include the actual leaflet code but has it as a dependency.
 
 ## Limitations / known issues
  - Currently fixed to 1024x1024 map size.
- - Image path not correctly set.
 
 ## Example
 
