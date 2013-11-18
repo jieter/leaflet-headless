@@ -11,7 +11,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "leaflet": "~0.6.4",
+    "leaflet": "~0.7.0",
     "jsdom": "~0.8.8",
     "canvas": "~1.1.2"
   },
