@@ -5,6 +5,8 @@ Leaflet-headless
 
  - Has Leaflet as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
+ - Uses [canvas](https://github.com/LearnBoost/node-canvas) `Image` implementation to fake images.
+   Note that node-canvas needs some dependencies to be installed: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
  - Tiles, Markers and Path layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
  - Currently fixed to 1024x1024 map size.
 

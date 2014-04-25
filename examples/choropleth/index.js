@@ -6,7 +6,7 @@
 'use strict';
 var fs = require('fs');
 var L = require('../../index.js');
-var leafletImage = require('leaflet-image');
+var leafletImage = require('../../lib/leaflet-image/index.js');
 
 // create an element for the map.
 var element = document.createElement('div');
