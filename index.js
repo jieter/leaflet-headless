@@ -17,50 +17,11 @@ GLOBAL.document = jsdom('<html><head></head><body></body></html>');
 GLOBAL.window = document.parentWindow;
 GLOBAL.window.navigator.userAgent = 'webkit';
 GLOBAL.navigator = GLOBAL.window.navigator;
+GLOBAL.Image = require('./src/image.js');
 
-// shim Image
-var canvasImage = require('canvas').Image;
-var imageShim = function imageShim() {};
-imageShim.prototype.__defineSetter__('src', function (src) {
-	var self = this;
-
-	function buffer2image(buffer) {
-		var image = new canvasImage();
-		image.src = buffer;
-
-		if (self.onload) {
-			self.onload.apply(image);
-		}
-	}
-	switch (src.substr(0, 7)) {
-	case 'http://':
-		request.get(src, function (err, res, buffer) {
-			buffer2image(buffer);
-		});
-		break;
-	case 'file://':
-		// remove file://
-		src = src.substr(7);
-		// and query string
-		if (src.indexOf('?') !== -1) {
-			src = src.substr(0, src.indexOf('?'));
-		}
-
-		var buffer = fs.readFileSync(src);
-		buffer2image(buffer);
-		break;
-	default:
-		console.error('what to do? ' + src);
-	}
-});
-
-GLOBAL.Image = imageShim;
-
+// Load leaflet
 GLOBAL.L_DISABLE_3D = true;
-
 var L = require('leaflet');
-
-// make L global too
 GLOBAL.L = L;
 
 var leafletPath = require.resolve('leaflet');
