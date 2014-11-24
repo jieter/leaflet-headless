@@ -1,26 +1,27 @@
 'use strict';
 
+var fs = require('fs');
 var L = require('../index.js');
 var chai = require('chai').should();
 
 describe('Leaflet-headless', function () {
+	var element, map;
+
+	beforeEach(function () {
+		element = document.createElement('div');
+		element.id = 'map';
+		element.style.width = '1024px';
+		element.style.height = '1024px';
+		document.body.appendChild(element);
+
+		map = L.map('map');
+	});
+	afterEach(function () {
+		map.remove();
+	});
 
 	describe('basic functions', function () {
-		var element, map;
 
-		beforeEach(function () {
-			element = document.createElement('div');
-			element.id = 'map';
-			element.style.width = '1024px';
-			element.style.height = '1024px';
-			document.body.appendChild(element);
-
-			map = L.map('map');
-		});
-
-		afterEach(function () {
-			map.remove();
-		});
 
 		it('has a size', function () {
 			map.setView([52, 4], 10);
@@ -60,7 +61,62 @@ describe('Leaflet-headless', function () {
 			}).addTo(map);
 		});
 
-		it('has some working imagePath');
+		it('has working imagePath', function () {
+			var path = L.Icon.Default.imagePath + '/';
+
+			fs.existsSync(path + 'layers.png').should.be.true;
+			fs.existsSync(path + 'marker-icon.png').should.be.true;
+		});
+
+	});
+
+	describe('Advanced functions', function () {
+		var leafletImage = require('leaflet-image');
+		var latlng = [52, 4];
+
+		it('saves an map with a marker using leaflet-image', function (done) {
+
+			L.marker(latlng).addTo(map);
+			map.setView(latlng, 12);
+
+			leafletImage(map, function(err, canvas) {
+				var out = fs.createWriteStream(__dirname + '/test-marker.png');
+				var stream = canvas.pngStream();
+
+				stream.on('data', function (chunk) {
+					out.write(chunk);
+				});
+
+				stream.on('end', function () {
+					fs.existsSync(__dirname + '/test-marker.png').should.be.true;
+					done();
+				});
+			});
+		});
+
+		it('saves an map with a marker and tiles using leaflet-image', function (done) {
+
+			L.marker(latlng).addTo(map);
+			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+			map.setView(latlng, 12);
+
+			leafletImage(map, function(err, canvas) {
+				var out = fs.createWriteStream(__dirname + '/test-map.png');
+				var stream = canvas.pngStream();
+
+				stream.on('data', function (chunk) {
+					out.write(chunk);
+				});
+
+				stream.on('end', function () {
+					fs.existsSync(__dirname + '/test-map.png').should.be.true;
+					done();
+				});
+			});
+		});
+
 
 	});
 });

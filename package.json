@@ -4,19 +4,24 @@
   "description": "Leaflet for node.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha -t 10000 -R spec"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jieter/leaflet-headless.git"
+  },
   "author": "Jan Pieter Waagmeester <jieter@jieter.nl>",
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "leaflet": "~0.7.0",
+    "canvas": "~1.1.2",
     "jsdom": "~0.8.8",
-    "canvas": "~1.1.2"
+    "leaflet": "~0.7.0",
+    "request": "^2.48.0"
   },
   "devDependencies": {
     "chai": "~1.8.1",
+    "leaflet-image": "0.0.4",
     "mocha": "~1.14.0"
   }
 }
