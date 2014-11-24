@@ -11,7 +11,7 @@
 var fs = require('fs');
 var L = require('../../index.js');
 
-require('leaflet.markercluster')(L);
+require('leaflet.markercluster');
 
 function cluster(zoom, callback) {
     callback = callback || function () {};

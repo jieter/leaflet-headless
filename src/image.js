@@ -27,7 +27,6 @@ Image.prototype.__defineSetter__('src', function (src) {
 	switch (src.substr(0, 7)) {
 	case 'https:/':
 	case 'http://':
-		console.log('GET ', src);
 		request.get(src, function (err, res, buffer) {
 			buffer2image(buffer);
 		});
