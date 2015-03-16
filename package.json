@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js src/*",
-    "test": "mocha -t 10000 -R spec test/test.js"
+    "test": "mocha -t 10000 -R spec test/test.js",
+    "release": "mversion patch -m"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "chai": "^2.1.2",
     "eslint": "^0.17.0",
     "leaflet-image": "~0.1.0",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "mversion": "^1.10.0"
   }
 }
