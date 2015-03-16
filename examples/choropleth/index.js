@@ -56,6 +56,7 @@ L.geoJson(require('./us-states.js'), {
 
 map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
+console.time('choropleth');
 console.log('Save to image using leaflet-image...');
 leafletImage(map, function (err, canvas) {
 	var out = fs.createWriteStream(__dirname + '/test.png');
@@ -67,6 +68,7 @@ leafletImage(map, function (err, canvas) {
 
 	stream.on('end', function () {
 		console.log('Saved test.png');
+		console.timeEnd('choropleth');
 	});
 
 });

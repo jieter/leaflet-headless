@@ -8,6 +8,7 @@ Leaflet-headless
  - Uses [canvas](https://github.com/LearnBoost/node-canvas) `Image` implementation to fake images. Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
  - Tiles, Markers and Path layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
  - Currently fixed to 1024x1024 map size.
+ - It's slow (~4s for the `examples/choropleth/` on my machine).
 
 
 ### Run tests
