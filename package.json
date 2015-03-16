@@ -17,7 +17,7 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "canvas": "~1.2.1",
-    "jsdom": "https://github.com/springmeyer/jsdom-nogyp/tarball/c501ee8b71d8",
+    "jsdom": "~3.1.2",
     "leaflet": "~0.7.3",
     "request": "^2.53.0"
   },
