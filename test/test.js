@@ -10,8 +10,8 @@ describe('Leaflet-headless', function () {
 	beforeEach(function () {
 		element = document.createElement('div');
 		element.id = 'map';
-		element.style.width = '400px';
-		element.style.height = '400px';
+		element.style.width = '1024px';
+		element.style.height = '1024px';
 		document.body.appendChild(element);
 
 		map = L.map('map');
@@ -21,8 +21,6 @@ describe('Leaflet-headless', function () {
 	});
 
 	describe('basic functions', function () {
-
-
 		it('has a size', function () {
 			map.setView([52, 4], 10);
 

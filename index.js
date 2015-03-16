@@ -22,17 +22,32 @@ GLOBAL.Image = require('./src/image.js');
 // Load leaflet
 GLOBAL.L_DISABLE_3D = true;
 GLOBAL.L_PREFER_CANVAS = true
-var L = require('leaflet');
-GLOBAL.L = L;
 
 var leafletPath = require.resolve('leaflet');
+var L = require(leafletPath);
+GLOBAL.L = L;
+
 var scriptLength = leafletPath.split('/').slice(-1)[0].length;
 L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images';
 
-// monkeypatch map.getSize to make it work with fixed 1024x1024 elements
+// Monkey patch map.getSize to make it work with fixed 1024x1024 elements
 // jsdom appears to not have clientHeight/clientWidth on elements
 L.Map.prototype.getSize = function () {
 	return L.point(1024, 1024);
 };
+
+// Monkey patch Map to disable animations.
+var originalMap = L.Map;
+L.Map = originalMap.extend({
+	initialize: function (id, options) {
+		options = L.extend(options || {}, {
+			animate: false,
+			fadeAnimation: false,
+			zoomAnimation: false,
+			markerZoomAnimation: false
+		});
+		return originalMap.prototype.initialize.call(this, id, options);
+	}
+});
 
 module.exports = L;
