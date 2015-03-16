@@ -25,6 +25,7 @@
   },
   "env": {
     "browser": false,
+    "node": true,
     "amd": true
   }
 }

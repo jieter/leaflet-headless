@@ -4,8 +4,8 @@
   "description": "Leaflet for node.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js src/*",
-    "test": "mocha -t 10000 -R spec test/test.js",
+    "lint": "eslint index.js src/* examples/choropleth/index.js",
+    "test": "mocha -t 10000 -R spec test/test.js && npm run lint",
     "release": "mversion patch -m"
   },
   "repository": {

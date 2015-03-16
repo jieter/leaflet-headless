@@ -26,6 +26,11 @@ Image.prototype.__defineSetter__('src', function (src) {
 	case 'https:/':
 	case 'http://':
 		request.get(src, function (err, res, buffer) {
+			if (err) {
+				console.error('Could not get url', err);
+				return;
+			}
+
 			buffer2image(buffer);
 		});
 		break;
@@ -39,6 +44,10 @@ Image.prototype.__defineSetter__('src', function (src) {
 		fs.exists(src, function (exists) {
 			if (exists) {
 				fs.readFile(src, function (err, buffer) {
+					if (err) {
+						console.err(err);
+						return;
+					}
 					buffer2image(buffer);
 				});
 			} else {
