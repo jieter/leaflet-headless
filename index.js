@@ -4,24 +4,18 @@
  * Server side leaflet with fake DOM using jsdom.
  */
 
-'use strict';
-
-var fs = require('fs');
-var request = require('request').defaults({
-	encoding: null
-});
 var jsdom = require('jsdom').jsdom;
 
 // make some globals to fake browser behaviour.
 GLOBAL.document = jsdom('<html><head></head><body></body></html>');
-GLOBAL.window = document.parentWindow;
+GLOBAL.window = GLOBAL.document.defaultView;
 GLOBAL.window.navigator.userAgent = 'webkit';
 GLOBAL.navigator = GLOBAL.window.navigator;
 GLOBAL.Image = require('./src/image.js');
 
 // Load leaflet
 GLOBAL.L_DISABLE_3D = true;
-GLOBAL.L_PREFER_CANVAS = true
+GLOBAL.L_PREFER_CANVAS = true;
 
 var leafletPath = require.resolve('leaflet');
 var L = require(leafletPath);

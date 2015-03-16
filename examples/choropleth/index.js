@@ -1,6 +1,7 @@
 /**
  * leaflet-image example.
  *
+ * From leaflet tutorials: http://leafletjs.com/examples/choropleth.html
  */
 
 'use strict';
@@ -54,7 +55,6 @@ L.geoJson(require('./us-states.js'), {
 }).addTo(map);
 
 map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
-
 
 console.log('Save to image using leaflet-image...');
 leafletImage(map, function (err, canvas) {

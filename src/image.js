@@ -3,21 +3,19 @@
  * http, https, and file urls.
  */
 
-'use strict';
-
 var fs = require('fs');
 var request = require('request').defaults({
 	encoding: null
 });
 
-var canvasImage = require('canvas').Image;
+var CanvasImage = require('canvas').Image;
 
 var Image = function Image() {};
 Image.prototype.__defineSetter__('src', function (src) {
 	var self = this;
 
 	function buffer2image(buffer) {
-		var image = new canvasImage();
+		var image = new CanvasImage();
 		image.src = buffer;
 
 		if (self.onload) {

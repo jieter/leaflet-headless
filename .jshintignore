@@ -1,4 +1,0 @@
-node_modules
-examples/choropleth/us-states.js
-examples/cluster-image/realworld.388.js
-examples/**/node_modules/*
