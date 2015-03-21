@@ -12,14 +12,11 @@ var L = require('../../index.js');
 var leafletImage = require('leaflet-image');
 var document = GLOBAL.document;
 
-function choroplethExample(quiet, callback) {
-	if (quiet === undefined) {
-		quiet = false;
-	}
+function choroplethExample(callback) {
 
 	// create an element for the map.
 	var element = document.createElement('div');
-	element.id = 'choropleth_map';
+	element.id = 'map-choropleth';
 	document.body.appendChild(element);
 
 	// the map.
@@ -64,11 +61,6 @@ function choroplethExample(quiet, callback) {
 
 	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
-	if (!quiet) {
-		console.time('choropleth');
-		console.log('Save to image using leaflet-image...');
-	}
-
 	leafletImage(map, function (err, canvas) {
 		if (err && callback) {
 			callback(err);
@@ -82,11 +74,6 @@ function choroplethExample(quiet, callback) {
 		});
 
 		stream.on('end', function () {
-			if (!quiet) {
-				console.log('Saved test-choropleth.png');
-				console.timeEnd('choropleth');
-			}
-
 			if (callback) {
 				callback(outfilename);
 			}
@@ -100,5 +87,11 @@ if (typeof exports === 'object') {
 
 // run the example if it's ran directly
 if (require.main === module) {
-	choroplethExample();
+	console.log('Save to image using leaflet-image...');
+	console.time('choropleth');
+
+	choroplethExample(function (filename) {
+		console.log('Saved file to ' + filename);
+		console.timeEnd('choropleth');
+	});
 }

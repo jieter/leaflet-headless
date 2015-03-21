@@ -74,8 +74,7 @@ describe('Leaflet-headless', function () {
 			var choroplethExample = require('../examples/choropleth/index.js');
 
 			it('runs + wrote to file', function (done) {
-				choroplethExample(true, function (testFilename) {
-
+				choroplethExample(function (testFilename) {
 					fs.existsSync(testFilename).should.be.true;
 					done();
 				});
