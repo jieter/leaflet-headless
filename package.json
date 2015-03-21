@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js src/* examples/*/index.js",
-    "test": "mocha -t 10000 -R spec test/test.js && npm run lint",
+    "test": "mocha -t 20000 -R spec test/test.js && npm run lint",
     "release": "mversion patch -m"
   },
   "repository": {
