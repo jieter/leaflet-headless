@@ -70,7 +70,15 @@ describe('Leaflet-headless', function () {
 	});
 
 	describe('Advanced functions', function () {
-		describe('choropleth example', function () {
+		describe('examples', function () {
+			var leafletImageExample = require('../examples/leaflet-image/index.js');
+
+			it('runs + wrote to file', function (done) {
+				leafletImageExample(function (testFilename) {
+					fs.existsSync(testFilename).should.be.true;
+					done();
+				});
+			});
 			var choroplethExample = require('../examples/choropleth/index.js');
 
 			it('runs + wrote to file', function (done) {
@@ -80,53 +88,5 @@ describe('Leaflet-headless', function () {
 				});
 			});
 		});
-
-	// 	var latlng = [52, 6];
-	// 	var leafletImage = require('leaflet-image');
-	//
-	// // Hmm, this takes lots of time, and is order-dependent. Disable for now...
-	// 	it('saves an map with a marker and tiles using leaflet-image', function (done) {
-	//
-	// 		L.marker(latlng).addTo(map);
-	// 		L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
-	// 			attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-	// 		}).addTo(map);
-	// 		map.setView(latlng, 12);
-	//
-	// 		leafletImage(map, function (err, canvas) {
-	// 			var out = fs.createWriteStream(__dirname + '/test-map.png');
-	// 			var stream = canvas.pngStream();
-	//
-	// 			stream.on('data', function (chunk) {
-	// 				out.write(chunk);
-	// 			});
-	//
-	// 			stream.on('end', function () {
-	// 				fs.existsSync(__dirname + '/test-map.png').should.be.true;
-	//
-	// 				done();
-	//
-	// 			});
-	// 		});
-	// 	});
-	// 	it('saves an map with a marker using leaflet-image', function (done) {
-	//
-	// 		L.marker(latlng).addTo(map);
-	// 		map.setView(latlng, 12);
-	//
-	// 		leafletImage(map, function (err, canvas) {
-	// 			var out = fs.createWriteStream(__dirname + '/test-marker.png');
-	// 			var stream = canvas.pngStream();
-	//
-	// 			stream.on('data', function (chunk) {
-	// 				out.write(chunk);
-	// 			});
-	//
-	// 			stream.on('end', function () {
-	// 				fs.existsSync(__dirname + '/test-marker.png').should.be.true;
-	// 				done();
-	// 			});
-	// 		});
-	// 	});
 	});
 });
