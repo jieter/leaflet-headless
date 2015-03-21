@@ -62,8 +62,9 @@ function choroplethExample(callback) {
 	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
 	leafletImage(map, function (err, canvas) {
-		if (err && callback) {
-			callback(err);
+		if (err) {
+			console.error(err);
+			return;
 		}
 		var outfilename = path.join(__dirname, 'test-choropleth.png');
 		var out = fs.createWriteStream(outfilename);

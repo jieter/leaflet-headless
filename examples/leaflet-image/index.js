@@ -8,6 +8,8 @@ var fs = require('fs');
 var path = require('path');
 
 var L = require('../../index.js');
+var document = GLOBAL.document;
+
 var leafletImage = require('leaflet-image');
 
 function leafletImageExample(callback) {
@@ -19,7 +21,7 @@ function leafletImageExample(callback) {
 	var map = L.map(element.id).setView([0, 0], 3);
 
 	// load some geojson
-	var gj = JSON.parse(fs.readFileSync(__dirname + '/countries.geojson'));
+	var gj = JSON.parse(fs.readFileSync(path.join(__dirname, 'countries.geojson')));
 	L.geoJson(gj, {
 		style: {
 			weight: 2
@@ -34,6 +36,10 @@ function leafletImageExample(callback) {
 	}).addTo(map);
 
 	leafletImage(map, function (err, canvas) {
+		if (err) {
+			console.error(err);
+			return;
+		}
 		var outfilename = path.join(__dirname, 'test-leaflet-image.png');
 		var out = fs.createWriteStream(outfilename);
 		var stream = canvas.pngStream();
