@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "^2.1.2",
+    "chai-leaflet": "0.0.10",
     "eslint": "^0.17.0",
     "leaflet-image": "~0.1.0",
     "mocha": "^2.2.1",
