@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "Leaflet for node.",
   "main": "index.js",
+  "browser": "browser.js",
   "scripts": {
     "lint": "eslint index.js src/* examples/*/index.js",
     "test": "mocha -t 20000 -R spec test/test.js && npm run lint",
