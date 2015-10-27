@@ -3,7 +3,7 @@ Leaflet-headless
 
 [Leaflet](http://leafletjs.com) for node.
 
- - Has Leaflet as dependency.
+ - Has Leaflet 1.0.0-beta as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses [canvas](https://github.com/LearnBoost/node-canvas) `Image` implementation to fake images. Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
  - Tiles, Markers and vector layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
@@ -15,22 +15,17 @@ Leaflet-headless
 
 Run `npm install leaflet-headless` to install the package. Requiring `leaflet-headless` will introduce a global `L` which just works like in the browser.
 
-```JavaScript
-var L = require('leaflet-headless');
-
-var map = L.map(document.createElement('div')).setView([52, 4], 10);
-
-var marker = L.marker([52, 4]).addTo(map);
-```
-
 For vector layers, make sure to use the canvas renderer if you want to use `leaflet-image`:
 
 ```JavaScript
 var L = require('leaflet-headless');
 
 var map = L.map(document.createElement('div')).setView([52, 4], 10);
-var canvas = L.canvas();
 
+var marker = L.marker([52, 4]).addTo(map);
+
+// canvas renderer for vector layers:
+var canvas = L.canvas();
 var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
 var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
 ```
