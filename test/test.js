@@ -35,27 +35,33 @@ describe('Leaflet-headless', function () {
 			size.y.should.equal(1024);
 		});
 
-		it('can change view', function () {
+		it('can change view', function (done) {
 			map.setView(latlng, 5);
 
 			map.getCenter().should.be.near(latlng);
 			map.getZoom().should.be.equal(5);
 
+			map.on('moveend', function () {
+				map.getCenter().should.be.near(latlng);
+				map.getZoom().should.be.equal(13);
+				done();
+			})
 			map.setView(latlng, 13);
-			map.getCenter().should.be.near(latlng);
-			map.getZoom().should.be.equal(13);
 		});
 
 		// although we tried to disable all animations
 		// this fails sometimes
-		it.skip('map is pannable', function () {
+		it('map is pannable', function (done) {
 			map.setView(latlng, 5);
 
-			map.panBy([200, 0]);
+			map.on('moveend', function () {
+				var center = map.getCenter();
+				center.lat.should.be.closeTo(lat, 0.1);
+				center.lng.should.greaterThan(lng);
+				done();
+			});
 
-			var center = map.getCenter();
-			center.lat.should.be.closeTo(lat, 0.1);
-			center.lng.should.greaterThan(lng);
+			map.panBy([200, 0]);
 		});
 
 		it('map with marker', function () {
@@ -84,16 +90,21 @@ describe('Leaflet-headless', function () {
 			fs.existsSync(path + 'marker-icon.png').should.be.true;
 		});
 
-		it('map with geojson', function () {
+		it('map with geojson', function (done) {
 			var geojson = JSON.parse('{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"foo":"bar"},"geometry":{"type":"Point","coordinates":[2.63671875,65.87472467098549]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-14.765625,-3.864254615721396]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[4.74609375,45.706179285330855]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[-13.18359375,46.437856895024225],[-8.96484375,49.83798245308484],[-5.09765625,43.83452678223684],[-30.41015625,38.272688535980976],[-32.34375,55.87531083569679],[-42.01171875,54.97761367069625],[-62.22656249999999,30.751277776257812]]}},{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-13.0078125,12.039320557540584],[-13.0078125,39.36827914916014],[16.5234375,29.99300228455108],[9.4921875,12.039320557540584],[-13.0078125,12.039320557540584]]]}}]}');
+			var canvas = L.canvas();
 
 			map.setView(latlng, 5);
 
-			var layer = L.geoJson(geojson).addTo(map);
-			map.fitBounds(layer.getBounds());
+			var layer = L.geoJson(geojson, {renderer: canvas}).addTo(map);
+			map.on('moveend', function () {
+				map.getCenter().should.not.be.near(latlng);
+				map.getZoom().should.be.equal(3);
 
-			map.getCenter().should.not.be.near(latlng);
-			map.getZoom().should.be.equal(3);
+				done();
+			});
+
+			map.fitBounds(layer.getBounds());
 		});
 	});
 

@@ -14,9 +14,7 @@ if (!GLOBAL.L) {
 	GLOBAL.navigator = GLOBAL.window.navigator;
 	GLOBAL.Image = require('./src/image.js');
 
-	// Load leaflet
 	GLOBAL.L_DISABLE_3D = true;
-	GLOBAL.L_PREFER_CANVAS = true;
 
 	var leafletPath = require.resolve('leaflet');
 	var L = require(leafletPath);

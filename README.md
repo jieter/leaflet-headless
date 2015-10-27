@@ -23,26 +23,33 @@ Run `npm install leaflet-headless` to install the package. Requiring `leaflet-he
 ```JavaScript
 var L = require('leaflet-headless');
 
-var map = L.map(document.createElement('div'));
-
-map.setView([52, 4], 10);
+var map = L.map(document.createElement('div')).setView([52, 4], 10);
 
 var marker = L.marker([52, 4]).addTo(map);
 ```
+
+For vector layers, make sure to use the canvas renderer if you want to use `leaflet-image`:
+
+```JavaScript
+var L = require('leaflet-headless');
+
+var map = L.map(document.createElement('div')).setView([52, 4], 10);
+var canvas = L.canvas();
+
+var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
+var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
+```
+
 
 Other examples:
  - `examples/leaflet-image/`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
  - `examples/leaflet-markercluster`, using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) to output clusters to stdout.
  - `examples/choropleth/`, [Choropleth tutorial from leafletjs.com](http://leafletjs.com/examples/choropleth.html) using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
 
-For these to work, you'll need to run `npm install` in both the root of the repository and in the example directory.
-
 ```
 ~/leaflet-headless$ npm install
 [...]
 ~/leaflet-headless$ cd examples/leaflet-image/
-~/leaflet-headless/examples/leaflet-image/$ npm install
-[...]
 ~/leaflet-headless/examples/leaflet-image/$ node index.js
 Save to image using leaflet-image...
 Saved test.png

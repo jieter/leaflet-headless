@@ -21,6 +21,7 @@ function choroplethExample(callback) {
 
 	// the map.
 	var map = L.map(element.id).setView([37.8, -96], 4);
+	var canvas = L.canvas();
 
 	L.tileLayer('http://{s}.tile.stamen.com/toner-background/{z}/{x}/{y}.png', {
 		attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
@@ -56,6 +57,7 @@ function choroplethExample(callback) {
 	}
 
 	L.geoJson(require('./us-states.js'), {
+		renderer: canvas,
 		style: style
 	}).addTo(map);
 
