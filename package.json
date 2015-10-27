@@ -7,7 +7,8 @@
   "scripts": {
     "lint": "eslint index.js src/* examples/*/index.js",
     "test": "mocha -t 20000 -R spec test/test.js && npm run lint",
-    "release": "mversion patch -m"
+    "release": "mversion patch -m",
+    "release-minor": "mversion minor -m"
   },
   "repository": {
     "type": "git",
