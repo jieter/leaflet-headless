@@ -6,14 +6,9 @@ Leaflet-headless
  - Has Leaflet as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses [canvas](https://github.com/LearnBoost/node-canvas) `Image` implementation to fake images. Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
- - Tiles, Markers and Path layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
+ - Tiles, Markers and vector layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
  - Currently fixed to 1024x1024 map size.
  - It's slow (~4s for the `examples/choropleth/` on my machine).
-
-
-### Run tests
-
-`npm test`
 
 
 ### Example
@@ -40,14 +35,16 @@ var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
 var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
 ```
 
-### Saving an image
+### Saving images
 
 `leaflet-headless` adds a convenience function to `L.Map` to save the current map to an image using `leaflet-image`.
 
 `L.Map.saveImage(filename, callback)`: Save image to `filename` and call `callback` when ready.
 
 ```JavaScript
-var map = L.map(element.id).setView([0, 0], 3);
+var L = require('leaflet-headless');
+
+var map = L.map(document.createElement('div')).setView([0, 0], 3);
 L.marker([-12, -14]).addTo(map);
 
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -57,11 +54,8 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.saveImage('test.png');
 ```
 
-
-
 ### Other examples:
  - `examples/leaflet-image/`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
- - `examples/leaflet-markercluster`, using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) to output clusters to stdout.
  - `examples/choropleth/`, [Choropleth tutorial from leafletjs.com](http://leafletjs.com/examples/choropleth.html) using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
 
 ```
@@ -72,6 +66,10 @@ map.saveImage('test.png');
 Save to image using leaflet-image...
 Saved test.png
 ```
+
+### Run tests
+
+`npm test`
 
 ### Attribution
 This is inspired by https://github.com/rclark/server-side-leaflet.

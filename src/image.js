@@ -35,7 +35,7 @@ Image.prototype.__defineSetter__('src', function (src) {
 		});
 		break;
 	case 'file://':
-		// remove file://
+		// strip off file://
 		src = src.substr(7);
 		// and query string
 		if (src.indexOf('?') !== -1) {
