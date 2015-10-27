@@ -37,16 +37,9 @@ var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
 `L.Map.saveImage(filename, callback)`: Save image to `filename` and call `callback` when ready.
 
 ```JavaScript
-var L = require('leaflet-headless');
-
-var map = L.map(document.createElement('div')).setView([0, 0], 3);
-L.marker([-12, -14]).addTo(map);
-
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-map.saveImage('test.png');
+map.saveImage('test.png', function (filename) {
+    console.log('Saved map image to ' + filename);
+});
 ```
 
 ### Other examples:
