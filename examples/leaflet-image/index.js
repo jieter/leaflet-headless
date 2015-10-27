@@ -10,8 +10,6 @@ var path = require('path');
 var L = require('../../index.js');
 var document = GLOBAL.document;
 
-var leafletImage = require('leaflet-image');
-
 function leafletImageExample(callback) {
 	// create an element for the map.
 	var element = document.createElement('div');
@@ -37,25 +35,7 @@ function leafletImageExample(callback) {
 		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
 
-	leafletImage(map, function (err, canvas) {
-		if (err) {
-			console.error(err);
-			return;
-		}
-		var outfilename = path.join(__dirname, 'test-leaflet-image.png');
-		var out = fs.createWriteStream(outfilename);
-		var stream = canvas.pngStream();
-
-		stream.on('data', function (chunk) {
-			out.write(chunk);
-		});
-
-		stream.on('end', function () {
-			if (callback) {
-				callback(outfilename);
-			}
-		});
-	});
+	map.saveImage(path.join(__dirname, 'test-leaflet-image.png'), callback);
 }
 
 // export if script is called as a module

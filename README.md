@@ -40,8 +40,26 @@ var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
 var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
 ```
 
+### Saving an image
 
-Other examples:
+`leaflet-headless` adds a convenience function to `L.Map` to save the current map to an image using `leaflet-image`.
+
+`L.Map.saveImage(filename, callback)`: Save image to `filename` and call `callback` when ready.
+
+```JavaScript
+var map = L.map(element.id).setView([0, 0], 3);
+L.marker([-12, -14]).addTo(map);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+map.saveImage('test.png');
+```
+
+
+
+### Other examples:
  - `examples/leaflet-image/`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
  - `examples/leaflet-markercluster`, using [Leaflet.markercluster](https://github.com/Leaflet/Leaflet.markercluster) to output clusters to stdout.
  - `examples/choropleth/`, [Choropleth tutorial from leafletjs.com](http://leafletjs.com/examples/choropleth.html) using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.

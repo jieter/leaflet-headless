@@ -5,11 +5,9 @@
  */
 
 
-var fs = require('fs');
 var path = require('path');
 
 var L = require('../../index.js');
-var leafletImage = require('leaflet-image');
 var document = GLOBAL.document;
 
 function choroplethExample(callback) {
@@ -63,26 +61,9 @@ function choroplethExample(callback) {
 
 	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
-	leafletImage(map, function (err, canvas) {
-		if (err) {
-			console.error(err);
-			return;
-		}
-		var outfilename = path.join(__dirname, 'test-choropleth.png');
-		var out = fs.createWriteStream(outfilename);
-		var stream = canvas.pngStream();
-
-		stream.on('data', function (chunk) {
-			out.write(chunk);
-		});
-
-		stream.on('end', function () {
-			if (callback) {
-				callback(outfilename);
-			}
-		});
-	});
+	map.saveImage(path.join(__dirname, 'test-choropleth.png'), callback);
 }
+
 // export if script is called as a module
 if (typeof exports === 'object') {
 	module.exports = choroplethExample;

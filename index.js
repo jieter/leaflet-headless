@@ -40,8 +40,36 @@ if (!GLOBAL.L) {
 				markerZoomAnimation: false
 			});
 			return originalMap.prototype.initialize.call(this, id, options);
+		},
+
+		saveImage: function (outfilename, callback) {
+			var leafletImage = require('leaflet-image');
+			var fs = require('fs');
+			leafletImage(this, function (err, canvas) {
+				if (err) {
+					console.error(err);
+					return;
+				}
+				var out = fs.createWriteStream(outfilename);
+				var stream = canvas.pngStream();
+
+				stream.on('data', function (chunk) {
+					out.write(chunk);
+				});
+
+				stream.on('end', function () {
+					if (callback) {
+						callback(outfilename);
+					}
+				});
+			});
 		}
 	});
+
+	// leaflet-image checks for instanceof(layer, L.TileLayer.Canvas)
+	// which is not in leaflet-1.0.0-beta.*, this makes the tests work.
+	// TODO: remove if this is fixed upstream in leaflet-image
+	L.TileLayer.Canvas = function () {};
 }
 
 module.exports = GLOBAL.L;
