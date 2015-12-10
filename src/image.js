@@ -42,17 +42,18 @@ Image.prototype.__defineSetter__('src', function (src) {
 			src = src.substr(0, src.indexOf('?'));
 		}
 		fs.exists(src, function (exists) {
-			if (exists) {
-				fs.readFile(src, function (err, buffer) {
-					if (err) {
-						console.err(err);
-						return;
-					}
-					buffer2image(buffer);
-				});
-			} else {
+			if (!exists) {
 				console.error('Could not find image ', src);
+				return;
 			}
+
+			fs.readFile(src, function (err, buffer) {
+				if (err) {
+					console.err(err);
+					return;
+				}
+				buffer2image(buffer);
+			});
 		});
 		break;
 	default:
