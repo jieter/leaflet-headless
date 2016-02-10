@@ -7,7 +7,6 @@ Leaflet-headless
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses [canvas](https://github.com/LearnBoost/node-canvas) `Image` implementation to fake images. Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
  - Tiles, Markers and vector layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
- - Currently fixed to 1024x1024 map size.
  - It's slow (~4s for the `examples/choropleth/` on my machine).
 
 
@@ -40,6 +39,14 @@ var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
 map.saveImage('test.png', function (filename) {
     console.log('Saved map image to ' + filename);
 });
+```
+
+The default size of images is 1024 x 1024. To adjust this size, a function has been added to set the size of the map 
+
+`L.Map.setSize(width, height)`
+
+```JavaScript
+map.setSize(800, 600);
 ```
 
 ### Other examples:
