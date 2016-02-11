@@ -10,7 +10,7 @@ var document = GLOBAL.document;
 
 require('mapbox.js');
 
-function mapboxGeojsonExample(filename, callback) {
+function mapboxGeojsonExample (filename, callback) {
     // create an element for the map.
     var element = document.createElement('div');
     element.id = 'map-leaflet-image';

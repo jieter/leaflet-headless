@@ -14,7 +14,7 @@ var document = GLOBAL.document;
 
 require('leaflet.markercluster');
 
-function cluster(zoom, callback) {
+function cluster (zoom, callback) {
 	callback = callback || function () {};
 
 	fs.readFile('sample-data.geojson', function (err, content) {

@@ -10,11 +10,11 @@ var request = require('request').defaults({
 
 var CanvasImage = require('canvas').Image;
 
-var Image = function Image() {};
+var Image = function Image () {};
 Image.prototype.__defineSetter__('src', function (src) {
 	var self = this;
 
-	function buffer2image(buffer) {
+	function buffer2image (buffer) {
 		var image = new CanvasImage();
 		image.src = buffer;
 

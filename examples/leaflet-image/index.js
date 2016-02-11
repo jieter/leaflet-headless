@@ -10,7 +10,7 @@ var path = require('path');
 var L = require('../../index.js');
 var document = GLOBAL.document;
 
-function leafletImageExample(filename, callback) {
+function leafletImageExample (filename, callback) {
     // create an element for the map.
     var element = document.createElement('div');
     element.id = 'map-leaflet-image';

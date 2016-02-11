@@ -48,7 +48,7 @@ if (!GLOBAL.L) {
 			return this._size.clone();
 		},
 
-		setSize: function(width, height) {
+		setSize: function (width, height) {
 			this._size = new L.Point(width, height);
 			return this;
 		},

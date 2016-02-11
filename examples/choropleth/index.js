@@ -9,7 +9,7 @@ var path = require('path');
 var L = require('../../index.js');
 var document = GLOBAL.document;
 
-function choroplethExample(filename, callback) {
+function choroplethExample (filename, callback) {
 
     // create an element for the map.
     var element = document.createElement('div');
@@ -31,7 +31,7 @@ function choroplethExample(filename, callback) {
     }).addTo(map);
 
     // get color depending on population density value
-    function getColor(d) {
+    function getColor (d) {
         return d > 1000 ? '#800026' :
                d > 500  ? '#BD0026' :
                d > 200  ? '#E31A1C' :
@@ -42,7 +42,7 @@ function choroplethExample(filename, callback) {
                           '#FFEDA0';
     }
 
-    function style(feature) {
+    function style (feature) {
         return {
             weight: 2,
             opacity: 1,

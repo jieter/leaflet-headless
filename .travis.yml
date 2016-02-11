@@ -5,7 +5,7 @@ node_js:
   - '0.11'
   - 'iojs-v1.6.1'
 before_install:
-  - sudo apt-get update
+  - sudo apt-get update -qq
   - sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
 notifications:
    email: false
