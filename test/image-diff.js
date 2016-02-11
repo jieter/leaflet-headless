@@ -30,5 +30,5 @@ module.exports = function () {
     var args = arguments;
     setTimeout(function () {
         diff.apply(this, args);
-    }, 5);
+    }, 50);
 }

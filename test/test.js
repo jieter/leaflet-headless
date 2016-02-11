@@ -161,12 +161,12 @@ describe('Leaflet-headless', function () {
 			});
 		}
 		describe('leaflet-image example', function () {
-			it('runs + wrote to file', function (done) {
+			it('runs, wrote an image, equal to what we expected', function (done) {
 				example_runner('leaflet-image', done);
 			});
 		});
 		describe('choropleth example', function () {
-			it('runs + wrote to file', function (done) {
+			it('runs, wrote an image, equal to what we expected', function (done) {
 				example_runner('choropleth', done);
 			});
 		});
