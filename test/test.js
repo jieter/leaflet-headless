@@ -1,8 +1,13 @@
 'use strict';
 
+var path = require('path');
 var fs = require('fs');
+
 var L = require('../index.js');
+var canvas = L.canvas ? L.canvas() : undefined;
+
 var chai = require('chai');
+var diff = require('./image-diff.js');
 
 require('chai-leaflet');
 chai.should();
@@ -16,11 +21,13 @@ describe('Leaflet-headless', function () {
 	beforeEach(function () {
 		element = document.createElement('div');
 		element.id = 'map';
+		element.style.width = '1024px';
+		element.style.height = '1024px';
 		document.body.appendChild(element);
 
 		map = L.map('map');
 	});
-	
+
 	afterEach(function () {
 		map.remove();
 	});
@@ -36,7 +43,7 @@ describe('Leaflet-headless', function () {
 
 		it('can change size', function () {
 			map.setView(latlng, 10).setSize(800, 600);
-			
+
 			var size = map.getSize();
 			size.x.should.equal(800);
 			size.y.should.equal(600);
@@ -58,36 +65,15 @@ describe('Leaflet-headless', function () {
 
 		// although we tried to disable all animations
 		// this fails sometimes
-		it('map is pannable', function (done) {
+		it('map is pannable', function () {
 			map.setView(latlng, 5);
-
-			map.on('moveend', function () {
-				var center = map.getCenter();
-				center.lat.should.be.closeTo(lat, 0.1);
-				center.lng.should.greaterThan(lng);
-				done();
+			map.panBy([200, 0], {
+				animate: false
 			});
 
-			map.panBy([200, 0]);
-		});
-
-		it('map with marker', function () {
-			map.setView(latlng, 10);
-
-			var marker = L.marker(latlng).addTo(map);
-
-			map.hasLayer(marker).should.be.true;
-		});
-	});
-
-	describe('Adding layers', function () {
-		it('map with tilelayer', function () {
-			map.setView(latlng, 10);
-
-			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-			}).addTo(map);
+			var center = map.getCenter();
+			center.lat.should.be.closeTo(lat, 0.1);
+			center.lng.should.greaterThan(lng);
 		});
 
 		it('has working imagePath', function () {
@@ -97,43 +83,93 @@ describe('Leaflet-headless', function () {
 			fs.existsSync(path + 'marker-icon.png').should.be.true;
 		});
 
-		it('map with geojson', function (done) {
+		it('has a working saveImage() method', function (done) {
+			map.setView([10, 10], 3).setSize(200, 200);
+
+			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+			}).addTo(map);
+
+			L.polyline([[10, 10], [0, 0]], {
+				renderer: canvas
+			}).addTo(map);
+			L.marker([10, 10]).addTo(map);
+
+			var outfilename = path.join(__dirname, 'test-saveimage.png');
+			var expected = path.join(__dirname, 'expected', 'test-saveimage.png');
+
+			map.saveImage(outfilename, function (filename) {
+				filename.should.equal(outfilename);
+
+				fs.existsSync(filename).should.be.true;
+				setTimeout(function () {
+					diff(expected, filename, done);
+
+				}, 50);
+			});
+		});
+	});
+
+	describe('Adding layers', function () {
+		it('L.Marker()', function () {
+			map.setView(latlng, 10);
+
+			var marker = L.marker(latlng).addTo(map);
+
+			map.hasLayer(marker).should.be.true;
+		});
+
+		it('L.TileLayer()', function () {
+			map.setView(latlng, 10);
+
+			var tilelayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+			}).addTo(map);
+
+			map.hasLayer(tilelayer).should.be.true;
+		});
+
+		it('L.Polyline()', function () {
+			map.setView([52, 4], 10);
+
+			var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
+			var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
+		});
+
+		it('L.GeoJSON()', function () {
 			var geojson = JSON.parse('{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"foo":"bar"},"geometry":{"type":"Point","coordinates":[2.63671875,65.87472467098549]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[-14.765625,-3.864254615721396]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[4.74609375,45.706179285330855]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[-13.18359375,46.437856895024225],[-8.96484375,49.83798245308484],[-5.09765625,43.83452678223684],[-30.41015625,38.272688535980976],[-32.34375,55.87531083569679],[-42.01171875,54.97761367069625],[-62.22656249999999,30.751277776257812]]}},{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[-13.0078125,12.039320557540584],[-13.0078125,39.36827914916014],[16.5234375,29.99300228455108],[9.4921875,12.039320557540584],[-13.0078125,12.039320557540584]]]}}]}');
-			var canvas = L.canvas();
 
 			map.setView(latlng, 5);
 
 			var layer = L.geoJson(geojson, {renderer: canvas}).addTo(map);
-			map.on('moveend', function () {
-				map.getCenter().should.not.be.near(latlng);
-				map.getZoom().should.be.equal(3);
-
-				done();
-			});
-
-			map.fitBounds(layer.getBounds());
+			map.fitBounds(layer.getBounds(), {animate: false});
+			map.getCenter().should.not.be.near(latlng);
+			map.getZoom().should.be.equal(3);
 		});
 	});
 
 	describe('Advanced functions', function () {
-		describe('examples', function () {
-			var leafletImageExample = require('../examples/leaflet-image/index.js');
+		function example_runner(example, callback) {
+			var filename = path.join(__dirname, 'example-' + example + '.png');
+			var expected = path.join(__dirname, 'expected', 'example-' + example + '.png');
 
-			it('runs + wrote to file', function (done) {
-				leafletImageExample(function (testFilename) {
-					fs.existsSync(testFilename).should.be.true;
-					done();
-				});
+			require('../examples/' + example + '/index.js')(filename, function (actual) {
+				fs.existsSync(actual).should.be.true;
+					diff(expected, actual, callback);
 			});
-			var choroplethExample = require('../examples/choropleth/index.js');
-
+		}
+		describe('leaflet-image example', function () {
 			it('runs + wrote to file', function (done) {
-				choroplethExample(function (testFilename) {
-					fs.existsSync(testFilename).should.be.true;
-					done();
-				});
+				example_runner('leaflet-image', done);
+			});
+		});
+		describe('choropleth example', function () {
+			it('runs + wrote to file', function (done) {
+				example_runner('choropleth', done);
 			});
 		});
 	});
-	
+
 });
