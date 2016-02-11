@@ -19,7 +19,7 @@ function diff (expected, actual, callback) {
             throw err;
         }
         if (!equal) {
-            throw Error(
+            console.log(
                 'Image not equal to expected image in ' + expected + ', ' +
                 'diff in ' + diffoutput
             );
