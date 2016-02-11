@@ -4,6 +4,8 @@ var path = require('path');
 var fs = require('fs');
 
 var L = require('../index.js');
+
+// canvas renderer for leaflet 1.0.0, do not use for leaflet 0.7.x
 var canvas = L.canvas ? L.canvas() : undefined;
 
 var chai = require('chai');
@@ -21,8 +23,6 @@ describe('Leaflet-headless', function () {
 	beforeEach(function () {
 		element = document.createElement('div');
 		element.id = 'map';
-		element.style.width = '1024px';
-		element.style.height = '1024px';
 		document.body.appendChild(element);
 
 		map = L.map('map');
