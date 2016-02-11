@@ -4,7 +4,11 @@ var imageDiff = require('image-diff');
 
 function diff (expected, actual, callback) {
 
-    var diffoutput = path.join(__dirname, 'diff.png');
+    var diffdir = __dirname;
+    if (process.env.CIRCLE_ARTIFACTS) {
+        diffdir = process.env.CIRCLE_ARTIFACTS;
+    }
+    var diffoutput = path.join(diffdir, 'diff.png');
 
     imageDiff({
         actualImage: actual,
