@@ -15,6 +15,7 @@ if (!GLOBAL.L) {
 	GLOBAL.Image = require('./src/image.js');
 
 	GLOBAL.L_DISABLE_3D = true;
+	GLOBAL.L_PREFER_CANVAS = true;
 
 	var leafletPath = require.resolve('leaflet');
 	var L = require(leafletPath);
@@ -29,7 +30,6 @@ if (!GLOBAL.L) {
 		// Override initialize to disable animations.
 		initialize: function (id, options) {
 			options = L.extend(options || {}, {
-				animate: false,
 				fadeAnimation: false,
 				zoomAnimation: false,
 				markerZoomAnimation: false
