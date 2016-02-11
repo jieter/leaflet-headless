@@ -26,7 +26,11 @@ if (!GLOBAL.L) {
 	// Monkey patch map.getSize to make it work with fixed 1024x1024 elements
 	// jsdom appears to not have clientHeight/clientWidth on elements
 	L.Map.prototype.getSize = function () {
-		return L.point(1024, 1024);
+		if (!this._size || this._sizeChanged) {
+			this._size = new L.Point(1024, 1024);
+			this._sizeChanged = false;
+		}
+		return this._size.clone();
 	};
 
 	// Monkey patch Map to disable animations.
@@ -39,7 +43,14 @@ if (!GLOBAL.L) {
 				zoomAnimation: false,
 				markerZoomAnimation: false
 			});
+
 			return originalMap.prototype.initialize.call(this, id, options);
+		},
+
+		// Set your own size for the output using L.Map.setSize()
+		setSize: function(width, height) {
+			this._size = new L.Point(width, height);
+			return this;
 		},
 
 		saveImage: function (outfilename, callback) {
@@ -65,6 +76,7 @@ if (!GLOBAL.L) {
 			});
 		}
 	});
+
 
 	// leaflet-image checks for instanceof(layer, L.TileLayer.Canvas)
 	// which is not in leaflet-1.0.0-beta.*, this makes the tests work.

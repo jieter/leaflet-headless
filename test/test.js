@@ -16,23 +16,30 @@ describe('Leaflet-headless', function () {
 	beforeEach(function () {
 		element = document.createElement('div');
 		element.id = 'map';
-		element.style.width = '1024px';
-		element.style.height = '1024px';
 		document.body.appendChild(element);
 
 		map = L.map('map');
 	});
+	
 	afterEach(function () {
 		map.remove();
 	});
 
 	describe('Basic map functions', function () {
-		it('has a size', function () {
+		it('has a default size of 1024x1024', function () {
 			map.setView(latlng, 10);
 
 			var size = map.getSize();
 			size.x.should.equal(1024);
 			size.y.should.equal(1024);
+		});
+
+		it('can change size', function () {
+			map.setView(latlng, 10).setSize(800, 600);
+			
+			var size = map.getSize();
+			size.x.should.equal(800);
+			size.y.should.equal(600);
 		});
 
 		it('can change view', function (done) {
@@ -128,4 +135,5 @@ describe('Leaflet-headless', function () {
 			});
 		});
 	});
+	
 });
