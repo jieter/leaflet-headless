@@ -1,6 +1,6 @@
 {
   "name": "leaflet-headless",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Leaflet for node.",
   "main": "index.js",
   "browser": "browser.js",
