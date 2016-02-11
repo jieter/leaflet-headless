@@ -23,19 +23,10 @@ if (!GLOBAL.L) {
 	var scriptLength = leafletPath.split('/').slice(-1)[0].length;
 	L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images';
 
-	// Monkey patch map.getSize to make it work with fixed 1024x1024 elements
-	// jsdom appears to not have clientHeight/clientWidth on elements
-	L.Map.prototype.getSize = function () {
-		if (!this._size || this._sizeChanged) {
-			this._size = new L.Point(1024, 1024);
-			this._sizeChanged = false;
-		}
-		return this._size.clone();
-	};
-
-	// Monkey patch Map to disable animations.
+	// Monkey patch Leaflet
 	var originalMap = L.Map;
 	L.Map = originalMap.extend({
+		// Override initialize to disable animations.
 		initialize: function (id, options) {
 			options = L.extend(options || {}, {
 				animate: false,
@@ -47,7 +38,16 @@ if (!GLOBAL.L) {
 			return originalMap.prototype.initialize.call(this, id, options);
 		},
 
-		// Set your own size for the output using L.Map.setSize()
+		// jsdom does not have clientHeight/clientWidth on elements.
+		// Adjust size with L.Map.setSize()
+		getSize: function () {
+			if (!this._size || this._sizeChanged) {
+				this._size = new L.Point(1024, 1024);
+				this._sizeChanged = false;
+			}
+			return this._size.clone();
+		},
+
 		setSize: function(width, height) {
 			this._size = new L.Point(width, height);
 			return this;
@@ -76,7 +76,6 @@ if (!GLOBAL.L) {
 			});
 		}
 	});
-
 
 	// leaflet-image checks for instanceof(layer, L.TileLayer.Canvas)
 	// which is not in leaflet-1.0.0-beta.*, this makes the tests work.

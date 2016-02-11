@@ -28,6 +28,13 @@ var canvas = L.canvas();
 var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
 var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
 ```
+### Setting map size
+
+Because jsdom does not support `clientWidth`/`clientHeight`, `leaflet-headless` defaults to a map size of 1024x1024px. To adjust this size, use `L.Map.setSize(width, height)`.
+
+```JavaScript
+map.setSize(800, 600);
+```
 
 ### Saving images
 
@@ -41,17 +48,10 @@ map.saveImage('test.png', function (filename) {
 });
 ```
 
-The default size of images is 1024 x 1024. To adjust this size, a function has been added to set the size of the map 
-
-`L.Map.setSize(width, height)`
-
-```JavaScript
-map.setSize(800, 600);
-```
-
 ### Other examples:
  - `examples/leaflet-image/`, using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
  - `examples/choropleth/`, [Choropleth tutorial from leafletjs.com](http://leafletjs.com/examples/choropleth.html) using [leaflet-image](https://github.com/mapbox/leaflet-image) to output a `.png`.
+ - `examples/mapbox-geojson`, use [mapbox.js](https://github.com/mapbox/mapbox.js) to render a GeoJSON file with [simplestyle](https://github.com/mapbox/simplestyle-spec) styling.
 
 ```
 ~/leaflet-headless$ npm install
