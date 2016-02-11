@@ -8,7 +8,7 @@ function diff (expected, actual, callback) {
     if (process.env.CIRCLE_ARTIFACTS) {
         diffdir = process.env.CIRCLE_ARTIFACTS;
     }
-    var diffoutput = path.join(diffdir, 'diff.png');
+    var diffoutput = path.join(diffdir, 'diff-' + path.basename(actual));
 
     imageDiff({
         actualImage: actual,
