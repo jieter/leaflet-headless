@@ -151,25 +151,22 @@ describe('Leaflet-headless', function () {
 	});
 
 	describe('Advanced functions', function () {
-		function example_runner(example, callback) {
-			var filename = path.join(__dirname, 'example-' + example + '.png');
-			var expected = path.join(__dirname, 'expected', 'example-' + example + '.png');
+		function exampleRunner (example) {
+			describe(example + ' example', function () {
+				it('runs, wrote an image, equal to what we expected', function (done) {
+					var filename = path.join(__dirname, 'example-' + example + '.png');
+					var expected = path.join(__dirname, 'expected', 'example-' + example + '.png');
 
-			require('../examples/' + example + '/index.js')(filename, function (actual) {
-				fs.existsSync(actual).should.be.true;
-					diff(expected, actual, callback);
+					require('../examples/' + example + '/index.js')(filename, function (actual) {
+						fs.existsSync(actual).should.be.true;
+							diff(expected, actual, done);
+					});
+				});
 			});
 		}
-		describe('leaflet-image example', function () {
-			it('runs, wrote an image, equal to what we expected', function (done) {
-				example_runner('leaflet-image', done);
-			});
-		});
-		describe('choropleth example', function () {
-			it('runs, wrote an image, equal to what we expected', function (done) {
-				example_runner('choropleth', done);
-			});
-		});
+
+		exampleRunner('leaflet-image');
+		exampleRunner('choropleth');
 	});
 
 });
