@@ -50,6 +50,8 @@ if (!GLOBAL.L) {
 
 		setSize: function (width, height) {
 			this._size = new L.Point(width, height);
+			// reset pixelOrigin
+			this._resetView(this.getCenter(), this.getZoom());
 			return this;
 		},
 
