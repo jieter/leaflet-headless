@@ -50,7 +50,7 @@ if (require.main === module) {
     console.log('Saving a mapbox styled image using leaflet-image...');
     console.time('leaflet-image');
 
-    var filename = path.join(__dirname, 'test-mapbox-image.png');
+    var filename = path.join(__dirname, 'example-mapbox-image.png');
     mapboxGeojsonExample(filename, function () {
         console.log('Saved file to ' + filename);
         console.timeEnd('leaflet-image');

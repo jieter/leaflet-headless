@@ -48,7 +48,7 @@ if (require.main === module) {
     console.log('Saving an image using leaflet-image...');
     console.time('leaflet-image');
 
-    var filename = path.join(__dirname, 'test-leaflet-image.png');
+    var filename = path.join(__dirname, 'example-leaflet-image.png');
     leafletImageExample(filename, function (filename) {
         console.log('Saved file to ' + filename);
         console.timeEnd('leaflet-image');
