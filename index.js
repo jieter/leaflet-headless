@@ -6,20 +6,24 @@
 
 var jsdom = require('jsdom').jsdom;
 
-if (!GLOBAL.L) {
+if (!global.L) {
     // make some globals to fake browser behaviour.
-    GLOBAL.document = jsdom('<html><head></head><body></body></html>');
-    GLOBAL.window = GLOBAL.document.defaultView;
-    GLOBAL.window.navigator.userAgent = 'webkit';
-    GLOBAL.navigator = GLOBAL.window.navigator;
-    GLOBAL.Image = require('./src/image.js');
+    global.document = jsdom('<html><head></head><body></body></html>', {
+        features: {
+            FetchExternalResources: ['img']
+        }
+    });
+    global.window = global.document.defaultView;
+    global.window.navigator.userAgent = 'webkit';
+    global.navigator = global.window.navigator;
+    global.Image = require('./src/image.js');
 
-    GLOBAL.L_DISABLE_3D = true;
-    GLOBAL.L_PREFER_CANVAS = true;
+    global.L_DISABLE_3D = true;
+    global.L_NO_TOUCH = true;
 
     var leafletPath = require.resolve('leaflet');
     var L = require(leafletPath);
-    GLOBAL.L = L;
+    global.L = L;
 
     var scriptLength = leafletPath.split('/').slice(-1)[0].length;
     L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images';
@@ -32,7 +36,8 @@ if (!GLOBAL.L) {
             options = L.extend(options || {}, {
                 fadeAnimation: false,
                 zoomAnimation: false,
-                markerZoomAnimation: false
+                markerZoomAnimation: false,
+                renderer: L.canvas()
             });
 
             return originalMap.prototype.initialize.call(this, id, options);
@@ -85,4 +90,4 @@ if (!GLOBAL.L) {
     L.TileLayer.Canvas = function () {};
 }
 
-module.exports = GLOBAL.L;
+module.exports = global.L;
