@@ -5,7 +5,7 @@ Leaflet-headless
 
 
  - Has Leaflet 1.0.0-rc.1 as dependency.
- - Uses [jsdom 8.x.x](https://github.com/tmpvar/jsdom) to fake ad DOM. jsdom [requires node.js 4 or higher](https://github.com/tmpvar/jsdom/blob/master/Changelog.md#700).
+ - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses `Image` implementation and canvas from [canvas](https://github.com/LearnBoost/node-canvas).
    Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
  - Tiles, Markers and vector layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
