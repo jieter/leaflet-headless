@@ -6,7 +6,7 @@
   "browser": "browser.js",
   "scripts": {
     "lint": "eslint index.js src/* examples/*/index.js",
-    "test": "mocha -t 30000 -R spec test/test.js && npm run lint",
+    "test": "mocha -t 40000 -R spec test/test.js && npm run lint",
     "release": "mversion patch -m",
     "release-minor": "mversion minor -m"
   },
