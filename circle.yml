@@ -1,3 +1,6 @@
+machine:
+  node:
+    version: 4
 test:
     pre:
         - sudo apt-get update -qq
