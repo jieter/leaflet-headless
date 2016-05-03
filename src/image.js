@@ -5,60 +5,60 @@
 
 var fs = require('fs');
 var request = require('request').defaults({
-	encoding: null
+    encoding: null
 });
 
 var CanvasImage = require('canvas').Image;
 
 var Image = function Image () {};
 Image.prototype.__defineSetter__('src', function (src) {
-	var self = this;
+    var self = this;
 
-	function buffer2image (buffer) {
-		var image = new CanvasImage();
-		image.src = buffer;
+    function buffer2image (buffer) {
+        var image = new CanvasImage();
+        image.src = buffer;
 
-		if (self.onload) {
-			self.onload.apply(image);
-		}
-	}
-	switch (src.substr(0, 7)) {
-	case 'https:/':
-	case 'http://':
-		request.get(src, function (err, res, buffer) {
-			if (err) {
-				console.error('Could not get url', err);
-				return;
-			}
+        if (self.onload) {
+            self.onload.apply(image);
+        }
+    }
+    switch (src.substr(0, 7)) {
+    case 'https:/':
+    case 'http://':
+        request.get(src, function (err, res, buffer) {
+            if (err) {
+                console.error('Could not get url', err);
+                return;
+            }
 
-			buffer2image(buffer);
-		});
-		break;
-	case 'file://':
-		// strip off file://
-		src = src.substr(7);
-		// and query string
-		if (src.indexOf('?') !== -1) {
-			src = src.substr(0, src.indexOf('?'));
-		}
-		fs.exists(src, function (exists) {
-			if (!exists) {
-				console.error('Could not find image ', src);
-				return;
-			}
+            buffer2image(buffer);
+        });
+        break;
+    case 'file://':
+        // strip off file://
+        src = src.substr(7);
+        // and query string
+        if (src.indexOf('?') !== -1) {
+            src = src.substr(0, src.indexOf('?'));
+        }
+        fs.exists(src, function (exists) {
+            if (!exists) {
+                console.error('Could not find image ', src);
+                return;
+            }
 
-			fs.readFile(src, function (err, buffer) {
-				if (err) {
-					console.err(err);
-					return;
-				}
-				buffer2image(buffer);
-			});
-		});
-		break;
-	default:
-		console.error('Image not implemented for url: ' + src);
-	}
+            fs.readFile(src, function (err, buffer) {
+                if (err) {
+                    console.err(err);
+                    return;
+                }
+                buffer2image(buffer);
+            });
+        });
+        break;
+    default:
+        console.error('Image not implemented for url: ' + src);
+    }
 });
 
 module.exports = Image;
