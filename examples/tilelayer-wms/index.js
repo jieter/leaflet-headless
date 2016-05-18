@@ -15,8 +15,12 @@ function tilelayerWmsExample (filename, callback) {
 
     var map = L.map(element.id).setView([-17, -67], 3);
 
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
     L.tileLayer.wms('http://demo.opengeo.org/geoserver/ows?', {
-        layers: 'ne:ne'
+        layers: 'ne:ne',
+        transparent: true,
+        opacity: 0.1
     }).addTo(map);
 
     map.saveImage(filename, callback);
