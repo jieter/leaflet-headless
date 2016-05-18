@@ -3,11 +3,9 @@
  *
  */
 
-'use strict';
-var fs = require('fs');
 var path = require('path');
-
 var L = require('../../index.js');
+
 var document = GLOBAL.document;
 
 function tilelayerWmsExample (filename, callback) {

@@ -6,8 +6,6 @@
  * https://github.com/rclark/server-side-leaflet/blob/master/sample-data.geojson)
  */
 
-'use strict';
-
 var fs = require('fs');
 var L = require('../../index.js');
 var document = GLOBAL.document;
