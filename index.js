@@ -37,7 +37,7 @@ if (!global.L) {
                 fadeAnimation: false,
                 zoomAnimation: false,
                 markerZoomAnimation: false,
-                renderer: L.canvas()
+                preferCanvas: true
             });
 
             return originalMap.prototype.initialize.call(this, id, options);
