@@ -8,7 +8,7 @@
 
 var fs = require('fs');
 var L = require('../../index.js');
-var document = GLOBAL.document;
+var document = global.document;
 
 require('leaflet.markercluster');
 
