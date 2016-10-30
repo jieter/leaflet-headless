@@ -5,6 +5,7 @@
  */
 
 var jsdom = require('jsdom').jsdom;
+var path = require('path');
 
 if (!global.L) {
     // make some globals to fake browser behaviour.
@@ -21,7 +22,7 @@ if (!global.L) {
     var L = require(leafletPath);
     global.L = L;
 
-    var scriptLength = leafletPath.split('/').slice(-1)[0].length;
+    var scriptLength = leafletPath.split(path.sep).slice(-1)[0].length;
     L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images';
 
     // Monkey patch Leaflet
