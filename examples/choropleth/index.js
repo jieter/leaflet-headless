@@ -17,7 +17,9 @@ function choroplethExample (filename, callback) {
     document.body.appendChild(element);
 
     // the map.
-    var map = L.map(element.id).setView([37.8, -96], 4);
+    var map = L.map(element.id, {
+        preferCanvas: true,
+    }).setView([37.8, -96], 4);
     var canvas = L.canvas ? L.canvas() : undefined;
 
     L.tileLayer('http://{s}.tile.stamen.com/toner-background/{z}/{x}/{y}.png', {

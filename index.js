@@ -15,15 +15,12 @@ if (!global.L) {
     global.navigator = global.window.navigator;
     global.Image = require('./src/image.js');
 
-    global.L_DISABLE_3D = true;
-    global.L_PREFER_CANVAS = true;
-
     var leafletPath = require.resolve('leaflet');
     var L = require(leafletPath);
     global.L = L;
 
     var scriptLength = leafletPath.split(path.sep).slice(-1)[0].length;
-    L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images';
+    L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images/';
 
     // Monkey patch Leaflet
     var originalMap = L.Map;
@@ -33,7 +30,8 @@ if (!global.L) {
             options = L.extend(options || {}, {
                 fadeAnimation: false,
                 zoomAnimation: false,
-                markerZoomAnimation: false
+                markerZoomAnimation: false,
+                preferCanvas: true,
             });
 
             return originalMap.prototype.initialize.call(this, id, options);
