@@ -16,7 +16,9 @@ function leafletImageExample (filename, callback) {
     element.id = 'map-leaflet-image';
     document.body.appendChild(element);
 
-    var map = L.map(element.id).setView([0, 0], 3);
+    var map = L.map(element.id, {
+        preferCanvas: true,
+    }).setView([0, 0], 3);
     var canvas = L.canvas ? L.canvas() : undefined;
 
     // load some geojson
