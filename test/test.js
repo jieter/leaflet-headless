@@ -76,13 +76,6 @@ describe('Leaflet-headless', function () {
 			center.lng.should.greaterThan(lng);
 		});
 
-		it('has working imagePath', function () {
-			var path = L.Icon.Default.imagePath + '/';
-
-			fs.existsSync(path + 'layers.png').should.be.true;
-			fs.existsSync(path + 'marker-icon.png').should.be.true;
-		});
-
 		it('has a working saveImage() method', function (done) {
 			map.setView([10, 10], 3).setSize(200, 200);
 
@@ -96,7 +89,7 @@ describe('Leaflet-headless', function () {
 			}).addTo(map);
 			L.marker([10, 10]).addTo(map);
 
-			var outfilename = path.join(__dirname, 'test-saveimage.png');
+			var outfilename = path.join(__dirname, 'actual', 'test-saveimage.png');
 			var expected = path.join(__dirname, 'expected', 'test-saveimage.png');
 
 			map.saveImage(outfilename, function (filename) {
@@ -154,7 +147,7 @@ describe('Leaflet-headless', function () {
 		function exampleRunner (example) {
 			describe(example + ' example', function () {
 				it('runs, wrote an image, equal to what we expected', function (done) {
-					var filename = path.join(__dirname, 'example-' + example + '.png');
+					var filename = path.join(__dirname, 'actual', 'example-' + example + '.png');
 					var expected = path.join(__dirname, 'expected', 'example-' + example + '.png');
 
 					require('../examples/' + example + '/index.js')(filename, function (actual) {

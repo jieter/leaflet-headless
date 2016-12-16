@@ -9,7 +9,11 @@ var path = require('path');
 
 if (!global.L) {
     // make some globals to fake browser behaviour.
-    global.document = jsdom('<html><head></head><body></body></html>');
+    global.document = jsdom('<html><head></head><body></body></html>', {
+        features: {
+            FetchExternalResources: ['img']
+        }
+    });
     global.window = global.document.defaultView;
     global.window.navigator.userAgent = 'webkit';
     global.navigator = global.window.navigator;
@@ -17,13 +21,14 @@ if (!global.L) {
 
     global.L_DISABLE_3D = true;
     global.L_PREFER_CANVAS = true;
+    global.L_NO_TOUCH = true;
 
     var leafletPath = require.resolve('leaflet');
     var L = require(leafletPath);
     global.L = L;
 
     var scriptLength = leafletPath.split(path.sep).slice(-1)[0].length;
-    L.Icon.Default.imagePath = leafletPath.substring(0, leafletPath.length - scriptLength) + 'images';
+    L.Icon.Default.imagePath = 'file://' + leafletPath.substring(0, leafletPath.length - scriptLength) + 'images/';
 
     // Monkey patch Leaflet
     var originalMap = L.Map;
@@ -33,7 +38,8 @@ if (!global.L) {
             options = L.extend(options || {}, {
                 fadeAnimation: false,
                 zoomAnimation: false,
-                markerZoomAnimation: false
+                markerZoomAnimation: false,
+                preferCanvas: true
             });
 
             return originalMap.prototype.initialize.call(this, id, options);
@@ -59,6 +65,7 @@ if (!global.L) {
         saveImage: function (outfilename, callback) {
             var leafletImage = require('leaflet-image');
             var fs = require('fs');
+
             leafletImage(this, function (err, canvas) {
                 if (err) {
                     console.error(err);
@@ -79,11 +86,6 @@ if (!global.L) {
             });
         }
     });
-
-    // leaflet-image checks for instanceof(layer, L.TileLayer.Canvas)
-    // which is not in leaflet-1.0.0-beta.*, this makes the tests work.
-    // TODO: remove if this is fixed upstream in leaflet-image
-    L.TileLayer.Canvas = function () {};
 }
 
 module.exports = global.L;

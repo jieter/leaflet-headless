@@ -10,6 +10,13 @@ var request = require('request').defaults({
 
 var CanvasImage = require('canvas').Image;
 
+function stripQuerystring (url) {
+    if (url.indexOf('?') !== -1) {
+        url = url.substr(0, url.indexOf('?'));
+    }
+    return url;
+}
+
 var Image = function Image () {};
 Image.prototype.__defineSetter__('src', function (src) {
     var self = this;
@@ -37,10 +44,10 @@ Image.prototype.__defineSetter__('src', function (src) {
     case 'file://':
         // strip off file://
         src = src.substr(7);
-        // and query string
-        if (src.indexOf('?') !== -1) {
-            src = src.substr(0, src.indexOf('?'));
-        }
+
+    default: // fallthrough
+        src = stripQuerystring(src);
+
         fs.exists(src, function (exists) {
             if (!exists) {
                 console.error('Could not find image ', src);
@@ -56,8 +63,7 @@ Image.prototype.__defineSetter__('src', function (src) {
             });
         });
         break;
-    default:
-        console.error('Image not implemented for url: ' + src);
+        // console.error('Image not implemented for url: ' + src);
     }
 });
 
