@@ -20,7 +20,6 @@ if (!global.L) {
     global.Image = require('./src/image.js');
 
     global.L_DISABLE_3D = true;
-    global.L_PREFER_CANVAS = true;
     global.L_NO_TOUCH = true;
 
     var leafletPath = require.resolve('leaflet');
