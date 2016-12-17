@@ -71,14 +71,8 @@ if (!global.L) {
                     console.error(err);
                     return;
                 }
-                var out = fs.createWriteStream(outfilename);
-                var stream = canvas.pngStream();
-
-                stream.on('data', function (chunk) {
-                    out.write(chunk);
-                });
-
-                stream.on('end', function () {
+                var data = canvas.toDataURL().replace(/^data:image\/\w+;base64,/, '');
+                fs.writeFile(outfilename, new Buffer(data, 'base64'), function () {
                     if (callback) {
                         callback(outfilename);
                     }
