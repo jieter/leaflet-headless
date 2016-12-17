@@ -4,7 +4,7 @@ Leaflet-headless
 [Leaflet](http://leafletjs.com) for node.
 
 
- - Has Leaflet 1.0.0-rc.1 as dependency.
+ - Has Leaflet 1.0.2 as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses `Image` implementation and canvas from [canvas](https://github.com/LearnBoost/node-canvas).
    Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
@@ -25,11 +25,10 @@ var map = L.map(document.createElement('div')).setView([52, 4], 10);
 
 var marker = L.marker([52, 4]).addTo(map);
 
-// canvas renderer for vector layers:
-var canvas = L.canvas();
 var latlngs = [[52, 4], [54, 4], [54, 6], [52, 6], [52, 4]];
-var polyline = L.polyline(latlngs, {renderer: canvas}).addTo(map);
+var polyline = L.polyline(latlngs).addTo(map);
 ```
+
 ### Setting map size
 
 Because jsdom does not support `clientWidth`/`clientHeight`, `leaflet-headless` defaults to a map size of 1024x1024px. To adjust this size, use `L.Map.setSize(width, height)`.

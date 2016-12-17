@@ -20,7 +20,6 @@ function mapboxGeojsonExample (filename, callback) {
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    var canvas = L.canvas ? L.canvas() : undefined;
 
     var geojson = [{
         type: 'Feature',
@@ -38,7 +37,6 @@ function mapboxGeojsonExample (filename, callback) {
     }];
 
     L.geoJson(geojson, {
-        renderer: canvas,
         style: L.mapbox.simplestyle.style
     }).addTo(map);
 

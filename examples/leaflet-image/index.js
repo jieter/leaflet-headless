@@ -17,12 +17,10 @@ function leafletImageExample (filename, callback) {
     document.body.appendChild(element);
 
     var map = L.map(element.id).setView([0, 0], 3);
-    var canvas = L.canvas ? L.canvas() : undefined;
 
     // load some geojson
     var gj = JSON.parse(fs.readFileSync(path.join(__dirname, 'countries.geojson')));
     L.geoJson(gj, {
-        renderer: canvas,
         style: {
             weight: 2
         }
