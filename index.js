@@ -31,7 +31,7 @@ if (!global.L) {
 
     // Monkey patch Leaflet
     var originalInit = L.Map.prototype.initialize;
-    L.Map.prototype.initialize = function(id, options)
+    L.Map.prototype.initialize = function (id, options)
     {
         options = L.extend(options || {}, {
             fadeAnimation: false,
