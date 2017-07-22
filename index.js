@@ -30,55 +30,53 @@ if (!global.L) {
     L.Icon.Default.imagePath = 'file://' + leafletPath.substring(0, leafletPath.length - scriptLength) + 'images/';
 
     // Monkey patch Leaflet
-    var originalMap = L.Map;
-    L.Map = originalMap.extend({
-        // Override initialize to disable animations.
-        initialize: function (id, options) {
-            options = L.extend(options || {}, {
-                fadeAnimation: false,
-                zoomAnimation: false,
-                markerZoomAnimation: false,
-                preferCanvas: true
-            });
+    var originalInit = L.Map.prototype.initialize;
+    L.Map.prototype.initialize = function (id, options)
+    {
+        options = L.extend(options || {}, {
+            fadeAnimation: false,
+            zoomAnimation: false,
+            markerZoomAnimation: false,
+            preferCanvas: true
+        });
 
-            return originalMap.prototype.initialize.call(this, id, options);
-        },
+        return originalInit.call(this, id, options);
+    }
 
-        // jsdom does not have clientHeight/clientWidth on elements.
-        // Adjust size with L.Map.setSize()
-        getSize: function () {
-            if (!this._size || this._sizeChanged) {
-                this._size = new L.Point(1024, 1024);
-                this._sizeChanged = false;
-            }
-            return this._size.clone();
-        },
-
-        setSize: function (width, height) {
-            this._size = new L.Point(width, height);
-            // reset pixelOrigin
-            this._resetView(this.getCenter(), this.getZoom());
-            return this;
-        },
-
-        saveImage: function (outfilename, callback) {
-            var leafletImage = require('leaflet-image');
-            var fs = require('fs');
-
-            leafletImage(this, function (err, canvas) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                var data = canvas.toDataURL().replace(/^data:image\/\w+;base64,/, '');
-                fs.writeFile(outfilename, new Buffer(data, 'base64'), function () {
-                    if (callback) {
-                        callback(outfilename);
-                    }
-                });
-            });
+    // jsdom does not have clientHeight/clientWidth on elements.
+    // Adjust size with L.Map.setSize()
+    L.Map.prototype.getSize = function () {
+        if (!this._size || this._sizeChanged) {
+            this._size = new L.Point(1024, 1024);
+            this._sizeChanged = false;
         }
-    });
+        return this._size.clone();
+    };
+
+    L.Map.prototype.setSize = function (width, height) {
+        this._size = new L.Point(width, height);
+        // reset pixelOrigin
+        this._resetView(this.getCenter(), this.getZoom());
+        return this;
+    };
+
+    L.Map.prototype.saveImage = function (outfilename, callback) {
+        var leafletImage = require('leaflet-image');
+        var fs = require('fs');
+
+        leafletImage(this, function (err, canvas) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            var data = canvas.toDataURL().replace(/^data:image\/\w+;base64,/, '');
+            fs.writeFile(outfilename, new Buffer(data, 'base64'), function () {
+                if (callback) {
+                    callback(outfilename);
+                }
+            });
+        });
+    };
 }
 
 module.exports = global.L;

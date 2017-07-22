@@ -4,7 +4,7 @@ Leaflet-headless
 [Leaflet](http://leafletjs.com) for node.
 
 
- - Has Leaflet 1.0.3 as dependency.
+ - Has Leaflet 1.1.x as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses `Image` implementation and canvas from [canvas](https://github.com/LearnBoost/node-canvas).
    Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
