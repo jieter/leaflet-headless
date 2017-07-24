@@ -13,14 +13,14 @@ function tilelayerWmsExample (filename, callback) {
     element.id = 'map-leaflet-tilelayer-wms';
     document.body.appendChild(element);
 
-    var map = L.map(element.id).setView([-17, -67], 3);
+    var map = L.map(element.id).setView([30, -90], 4);
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-    L.tileLayer.wms('http://demo.opengeo.org/geoserver/ows?', {
-        layers: 'ne:ne',
+    L.tileLayer.wms('https://ahocevar.com/geoserver/wms', {
+        layers: 'topp:states',
         transparent: true,
-        opacity: 0.1
+        opacity: 0.1,
+        format: 'image/png'
     }).addTo(map);
 
     map.saveImage(filename, callback);

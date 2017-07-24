@@ -160,6 +160,7 @@ describe('Leaflet-headless', function () {
 
 		exampleRunner('leaflet-image');
 		exampleRunner('choropleth');
+		exampleRunner('tilelayer-wms');
 	});
 
 });
