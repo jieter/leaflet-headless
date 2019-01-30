@@ -19,6 +19,7 @@ if (!global.L) {
     global.window.navigator.userAgent = 'webkit';
     global.navigator = global.window.navigator;
     global.Image = require('./src/image.js');
+    global.CanvasImage = require('canvas').Image;
 
     global.L_DISABLE_3D = true;
     global.L_NO_TOUCH = true;
