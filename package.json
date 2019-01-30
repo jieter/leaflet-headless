@@ -1,5 +1,5 @@
 {
-  "name": "leaflet-headless",
+  "name": "@joustrich/leaflet-headless",
   "version": "0.3.1",
   "description": "Leaflet for node.",
   "main": "index.js",
