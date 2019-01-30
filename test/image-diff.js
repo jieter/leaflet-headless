@@ -1,6 +1,8 @@
+var fs = require('fs');
 var path = require('path');
 
-var imageDiff = require('image-diff');
+var PNG = require('pngjs').PNG;
+var pixelmatch = require('pixelmatch');
 
 function diff (expected, actual, callback) {
 
@@ -10,22 +12,28 @@ function diff (expected, actual, callback) {
     }
     var diffoutput = path.join(diffdir, 'diff-' + path.basename(actual));
 
-    imageDiff({
-        actualImage: actual,
-        expectedImage: expected,
-        diffImage: diffoutput
-    }, function (err, equal) {
-        if (err) {
-            throw err;
-        }
-        if (!equal) {
+    var filesRead = 0;
+    var img1 = fs.createReadStream(expected).pipe(new PNG()).on('parsed', doneReading);
+    var img2 = fs.createReadStream(actual).pipe(new PNG()).on('parsed', doneReading);
+
+    function doneReading() {
+        if (++filesRead < 2) return;
+        var imgDiff = new PNG({ width: img1.width, height: img1.height });
+        var totalPixels = img1.width * img1.height;
+        var pixelsMismatched = pixelmatch(img1.data, img2.data, imgDiff.data, img1.width, img1.height, { threshold: 0.1 });
+        var pctMismatched = (pixelsMismatched / totalPixels) * 100;
+
+        imgDiff.pack().pipe(fs.createWriteStream(diffoutput));
+
+        if (pixelsMismatched > 0) {
             console.log(
                 'Image not equal to expected image in ' + expected + ', ' +
-                'diff in ' + diffoutput
+                'by ' + pixelsMismatched + ' out of ' + totalPixels + 'pixels (' + pctMismatched + '%). ' +
+                'Diff in ' + diffoutput
             );
         }
-        callback();
-    });
+        callback(pctMismatched);
+    }
 }
 
 module.exports = function () {

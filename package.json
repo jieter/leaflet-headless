@@ -18,9 +18,9 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
-    "canvas": "~1.6.2",
-    "jsdom": "~9.8.3",
-    "leaflet": "^1.0.3",
+    "canvas": "^2.3.1",
+    "jsdom": "^13.2.0",
+    "leaflet": "^1.4.0",
     "leaflet-image": "^0.4.0",
     "request": "^2.65.0"
   },
@@ -28,7 +28,8 @@
     "chai": "^3.5.0",
     "chai-leaflet": "0.0.12",
     "eslint": "^3.12.2",
-    "image-diff": "^1.6.3",
+    "pixelmatch": "^4.0.2",
+    "pngjs": "3.3.3",
     "mapbox.js": "^3.0.1",
     "mocha": "^2.2.1",
     "mversion": "^1.10.1"
