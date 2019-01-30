@@ -93,13 +93,16 @@ describe('Leaflet-headless', function () {
 			var expected = path.join(__dirname, 'expected', 'test-saveimage.png');
 
 			map.saveImage(outfilename, function (filename) {
-				filename.should.equal(outfilename);
+				try {
+					filename.should.equal(outfilename);
 
-				fs.existsSync(filename).should.be.true;
-				setTimeout(function () {
-					diff(expected, filename, done);
-
-				}, 50);
+					fs.existsSync(filename).should.be.true;
+					setTimeout(function () {
+						diff(expected, outfilename, () => done());
+					}, 50);
+				} catch (err) {
+					done(err);
+				}
 			});
 		});
 	});
@@ -151,8 +154,15 @@ describe('Leaflet-headless', function () {
 					var expected = path.join(__dirname, 'expected', 'example-' + example + '.png');
 
 					require('../examples/' + example + '/index.js')(filename, function (actual) {
-						fs.existsSync(actual).should.be.true;
-							diff(expected, actual, done);
+						try {
+						    fs.existsSync(actual).should.be.true;
+							diff(expected, actual, (pctMismatched) => {
+								pctMismatched.should.be.below(3);
+								done();
+							});
+						} catch (err) {
+							done(err);
+						}
 					});
 				});
 			});

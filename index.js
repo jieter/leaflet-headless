@@ -4,17 +4,18 @@
  * Server side leaflet with fake DOM using jsdom.
  */
 
-var jsdom = require('jsdom').jsdom;
+var jsdom = require('jsdom').JSDOM;
 var path = require('path');
 
 if (!global.L) {
     // make some globals to fake browser behaviour.
-    global.document = jsdom('<html><head></head><body></body></html>', {
+    var dom = new jsdom('<html><head></head><body></body></html>', {
         features: {
             FetchExternalResources: ['img']
         }
     });
-    global.window = global.document.defaultView;
+    global.document = dom.window.document;
+    global.window = dom.window;
     global.window.navigator.userAgent = 'webkit';
     global.navigator = global.window.navigator;
     global.Image = require('./src/image.js');
