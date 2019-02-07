@@ -1,13 +1,17 @@
 Leaflet-headless
 ----------------
 
+** This fork upgrades to canvas 2.3 and jsdom 13.2, which simplifies running in AWS lambda
+   because canvas > 2.0 includes necessary binaries out of the box without needing to install cairo.
+
+   Note: You will still need to install the lib on linux (or a linux Docker container) to run in lambda
+         https://github.com/Automattic/node-canvas/issues/1231
+
 [Leaflet](http://leafletjs.com) for node.
 
-
- - Has Leaflet 1.1.x as dependency.
+ - Has Leaflet 1.4.x as dependency.
  - Uses [jsdom](https://github.com/tmpvar/jsdom) to fake ad DOM.
  - Uses `Image` implementation and canvas from [canvas](https://github.com/LearnBoost/node-canvas).
-   Note that node-canvas needs some dependencies to be installed: for ubuntu: `sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++`
  - Tiles, Markers and vector layers work well with [leaflet-image](https://github.com/mapbox/leaflet-image)
  - It's slow (~4s for the `examples/choropleth/` on my machine).
 
